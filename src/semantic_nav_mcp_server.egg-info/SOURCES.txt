@@ -1,0 +1,14 @@
+README.md
+pyproject.toml
+src/semantic_nav_mcp_server/__init__.py
+src/semantic_nav_mcp_server/__main__.py
+src/semantic_nav_mcp_server/nav_client.py
+src/semantic_nav_mcp_server/server.py
+src/semantic_nav_mcp_server/waypoint_manager.py
+src/semantic_nav_mcp_server.egg-info/PKG-INFO
+src/semantic_nav_mcp_server.egg-info/SOURCES.txt
+src/semantic_nav_mcp_server.egg-info/dependency_links.txt
+src/semantic_nav_mcp_server.egg-info/entry_points.txt
+src/semantic_nav_mcp_server.egg-info/requires.txt
+src/semantic_nav_mcp_server.egg-info/top_level.txt
+tests/test_waypoint_manager.py

@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "semantic_nav": {
+      "command": "/path/to/your/semantic_nav_mcp_server/start_server.sh",
+      "env": {
+        "ROS_DISTRO": "jazzy",
+        "ROS_WORKSPACE": "/path/to/your/colcon_ws"
+      }
+    }
+  }
+}
