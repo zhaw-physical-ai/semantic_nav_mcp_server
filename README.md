@@ -113,7 +113,9 @@ The startup script supports these environment variables:
 
 ### MCP Client Configuration
 
-To use this server with an MCP client (like Claude Desktop), add it to your MCP configuration:
+#### Local Configuration (Claude Desktop on Same Machine)
+
+To use this server with an MCP client (like Claude Desktop) on the same machine, add it to your MCP configuration:
 
 **For Claude Desktop** (`~/Library/Application Support/Claude/claude_desktop_config.json` on macOS, or `%APPDATA%\Claude\claude_desktop_config.json` on Windows, or `~/.config/Claude/claude_desktop_config.json` on Linux):
 
@@ -150,11 +152,50 @@ To use this server with an MCP client (like Claude Desktop), add it to your MCP 
 
 **Note**: The `ROS_WORKSPACE` environment variable is optional. Only include it if you have a ROS workspace that needs to be sourced.
 
+#### Remote Configuration (Claude Desktop on Different Machine)
+
+For remote access (e.g., Claude Desktop on a laptop, robot on a different machine):
+
+**On the robot/server machine:**
+
+1. Start the server in remote mode:
+   ```bash
+   ./start_server_remote.sh
+   ```
+
+   Or with custom host/port:
+   ```bash
+   MCP_HOST=192.168.1.100 MCP_PORT=9000 ./start_server_remote.sh
+   ```
+
+**On the client machine (Claude Desktop):**
+
+Add this to your Claude Desktop config:
+
+```json
+{
+  "mcpServers": {
+    "semantic_nav": {
+      "url": "http://192.168.1.100:8000/sse",
+      "transport": "sse"
+    }
+  }
+}
+```
+
+Replace `192.168.1.100:8000` with your robot's actual IP address and port.
+
+**Environment Variables for Remote Mode:**
+- `MCP_HOST`: Host to bind to (default: `0.0.0.0` for all interfaces)
+- `MCP_PORT`: Port to bind to (default: `8000`)
+
 ## Usage
 
 ### Starting the Server Standalone
 
-For testing or manual use:
+#### Local Mode (stdio transport)
+
+For testing or manual use on the same machine:
 
 ```bash
 ./start_server.sh
@@ -165,6 +206,28 @@ Or with custom environment:
 ```bash
 ROS_DISTRO=humble ROS_WORKSPACE=/path/to/workspace ./start_server.sh
 ```
+
+#### Remote Mode (SSE transport)
+
+For remote access over HTTP (e.g., Claude Desktop on a different machine):
+
+```bash
+./start_server_remote.sh
+```
+
+This starts the server on `http://0.0.0.0:8000` by default. Customize with environment variables:
+
+```bash
+MCP_HOST=192.168.1.100 MCP_PORT=9000 ./start_server_remote.sh
+```
+
+You can also use command-line arguments directly:
+
+```bash
+UV_SYSTEM_PYTHON=1 uv run semantic_nav_mcp_server --transport sse --host 0.0.0.0 --port 8000
+```
+
+**Security Note**: The SSE server is unauthenticated. Only use on trusted networks or implement additional security measures for production use.
 
 ### MCP Tools Usage
 

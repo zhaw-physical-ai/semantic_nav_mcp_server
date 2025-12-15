@@ -824,7 +824,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "anyio" },
-    { name = "fastmcp", specifier = ">=2.12.3" },
+    { name = "fastmcp", extras = ["sse"], specifier = ">=2.12.3" },
     { name = "numpy", specifier = ">=2.0.0" },
     { name = "pyyaml", specifier = ">=6.0" },
 ]
